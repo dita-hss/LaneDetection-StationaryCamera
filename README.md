@@ -11,6 +11,8 @@ The project directory structure is as follows:
 - test_image.png: An example input image for testing.
 
 
+
+
 Video Demo: Bright Lighting
 
 <img src="video_frames/ex1.png" alt="frame 1" width="30%" height="30%">
