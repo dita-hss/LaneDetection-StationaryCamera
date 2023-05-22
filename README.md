@@ -11,4 +11,4 @@ The project directory structure is as follows:
 - test_image.png: An example input image for testing.
 
 
-![]('video_frames/ex1.png')
+![frame 1](video_frames/ex1.png)
