@@ -11,4 +11,5 @@ The project directory structure is as follows:
 - test_image.png: An example input image for testing.
 
 
-![frame 1](video_frames/ex1.png)
+<img src="video_frames/ex1.png" alt="frame 1" width="50%" height="50%">
+
