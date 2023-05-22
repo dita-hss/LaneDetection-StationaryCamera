@@ -1,6 +1,6 @@
 # Lane Detection Algorithm
 
-This project implements a lane detection algorithm using OpenCV. It detects and draws lane lines on an input image or video using various image processing techniques. This algorithm require positioning of the camera upon usage. 
+This project implements a lane detection algorithm using OpenCV. It detects and draws lane lines on an input image or video using various image processing techniques. This algorithm requires positioning of the camera upon usage. 
 
 
 The project directory structure is as follows:
