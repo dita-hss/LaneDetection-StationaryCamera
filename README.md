@@ -12,7 +12,9 @@ The project directory structure is as follows:
 
 
 Video Demo: Bright Lighting
+
 <img src="video_frames/ex1.png" alt="frame 1" width="30%" height="30%">
 
 Video Demo: Dark Lighting
+
 <img src="video_frames/ex2.png" alt="frame 1" width="30%" height="30%">
