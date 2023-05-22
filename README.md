@@ -1,4 +1,4 @@
-#Lane Detection Algorithm
+# Lane Detection Algorithm
 
 This project implements a lane detection algorithm using OpenCV. It detects and draws lane lines on an input image or video using various image processing techniques.
 
