@@ -31,10 +31,12 @@ def region_of_interest(image: np.ndarray) -> np.ndarray:
 
     height = image.shape[0]
     # values are specific to the camera positioning
-    triangle = np.array([[(200, height), (1100, height), (550, 250)]])
+    triangle = np.array([[(100, height), (1700, height), (850, 400)]])
     mask = np.zeros_like(image)
     cv2.fillPoly(mask, triangle, 255)
     masked_image = cv2.bitwise_and(image, mask)
+    
+  
     return masked_image
 
 def display_lines(image: np.ndarray, lines: np.ndarray) -> np.ndarray:
@@ -48,12 +50,12 @@ def display_lines(image: np.ndarray, lines: np.ndarray) -> np.ndarray:
     Returns:
         numpy.ndarray: Image with lines displayed.
     """
-    line_img = np.zeros_like(image)
+    line_img = np.zeros_like(image, dtype=np.uint8)
     if lines is not None:
         for line in lines:
-            x1, y1, x2, y2 = line.reshape(4)
-            cv2.line(line_img, (x1, y1), (x2, y2), (255, 0, 0), 10)
-
+            if line is not None and len(line)==4:
+                x1, y1, x2, y2 = line.reshape(4)
+                cv2.line(line_img, (int(x1), int(y1)), (int(x2), int(y2)), (255, 0, 0), 10)
     return line_img
 
 def avg_slope_intercept(image: np.ndarray, lines: np.ndarray) -> np.ndarray:
@@ -72,30 +74,34 @@ def avg_slope_intercept(image: np.ndarray, lines: np.ndarray) -> np.ndarray:
 
     if lines is not None:
         for line in lines:
-            x1, y1, x2, y2 = line.reshape(4)
-            parameters = np.polyfit((x1, x2), (y1, y2), 1)
-            slope = parameters[0]
-            intercept = parameters[1]
-            if slope < 0:
-                left_fit.append((slope, intercept))
-            else:
-                right_fit.append((slope, intercept))
-        
+            if line is not None and len(line) == 1 and len(line[0]) == 4:
+                x1, y1, x2, y2 = line[0]
+                parameters = np.polyfit((x1, x2), (y1, y2), 1)
+                slope = parameters[0]
+                intercept = parameters[1]
+                if slope < 0:
+                    left_fit.append((slope, intercept))
+                else:
+                    right_fit.append((slope, intercept))
+
         if left_fit:
             left_fit_avg = np.average(left_fit, axis=0)
             left_line = create_coords(image, left_fit_avg)
         else:
             print("No left lines detected.")
             left_line = np.array([0, 0, 0, 0])
-        
+
         if right_fit:
             right_fit_avg = np.average(right_fit, axis=0)
             right_line = create_coords(image, right_fit_avg)
         else:
             print("No right lines detected.")
             right_line = np.array([0, 0, 0, 0])
-        
-    return np.array([right_line, left_line])
+
+        return np.array([right_line, left_line])
+
+    else:
+        return np.array([[0, 0, 0, 0], [0, 0, 0, 0]])
 
 def create_coords(image: np.ndarray, line_parameters: Tuple[float, float]) -> np.ndarray:
     """
@@ -117,7 +123,7 @@ def create_coords(image: np.ndarray, line_parameters: Tuple[float, float]) -> np
 
 
 if __name__ == '__main__':
-    image = cv2.imread('test_image.jpg')
+    image = cv2.imread('test.jpg')
     lane_img = np.copy(image)
     canny_img = gradient(lane_img)
     cropped_img = region_of_interest(canny_img)
