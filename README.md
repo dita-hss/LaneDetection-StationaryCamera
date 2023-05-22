@@ -12,6 +12,8 @@ The project directory structure is as follows:
 
 
 
+<br><br>
+<br><br>
 
 Video Demo: Bright Lighting
 
